@@ -5,44 +5,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MTH Lectures App</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #f8f6f1;
-      color: #e8ecf1;
+      background: #0f172a;
+      color: #f8fafc;
       min-height: 100vh;
     }
 
-    /* Backdrop from CourseSelectionPage */
+    /* Backdrop from CourseSelectionPage (dark) */
     .sd-backdrop {
       position: fixed;
       inset: 0;
       z-index: 0;
-      background: #f8f6f1;
+      background: #0f172a;
       background-image:
-        radial-gradient(circle at 10% 20%, rgba(246,224,94,0.15) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(143,188,143,0.15) 0%, transparent 40%),
-        radial-gradient(circle at 90% 10%, rgba(255,127,80,0.1) 0%, transparent 40%);
+        radial-gradient(circle at 10% 20%, rgba(246,224,94,0.06) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(134,239,172,0.06) 0%, transparent 40%),
+        radial-gradient(circle at 90% 10%, rgba(255,127,80,0.04) 0%, transparent 40%);
     }
     .sd-backdrop::after {
       content: "";
       position: absolute;
       inset: 0;
-      background-image: radial-gradient(rgba(0,0,0,0.03) 2px, transparent 2px);
+      background-image: radial-gradient(rgba(255,255,255,0.03) 2px, transparent 2px);
       background-size: 32px 32px;
-      opacity: 0.8;
+      opacity: 0.5;
     }
+
+    /* Floating math symbols */
+    .sd-float-math { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .sd-float-math span {
+      position: absolute;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: rgba(255,255,255,0.02);
+      font-size: clamp(120px, 14vw, 220px);
+      user-select: none;
+      animation: sd-drift 26s ease-in-out infinite alternate;
+    }
+    .sd-float-math span:nth-child(1) { top: 10%; left: 6%; }
+    .sd-float-math span:nth-child(2) { top: 60%; left: 80%; animation-duration: 32s; animation-delay: -8s; }
+    .sd-float-math span:nth-child(3) { top: 38%; left: 48%; font-size: clamp(80px, 8vw, 140px); animation-delay: -12s; }
+    .sd-float-math span:nth-child(4) { top: 82%; left: 14%; font-size: clamp(90px, 10vw, 160px); animation-delay: -4s; }
+    @keyframes sd-drift { 0%{transform:translate3d(0,0,0) rotate(0)} 100%{transform:translate3d(40px,-30px,0) rotate(8deg)} }
 
     /* Header */
     header {
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(15, 23, 42, 0.85);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-bottom: 0.5px solid rgba(180, 160, 140, 0.2);
-      color: #1a2e1c;
+      border-bottom: 0.5px solid rgba(200, 180, 150, 0.1);
+      color: #E1F5EE;
       padding: 1rem 2rem;
       display: flex;
       align-items: center;
@@ -53,13 +70,13 @@
     }
     header .logo {
       width: 42px; height: 42px;
-      background: linear-gradient(135deg, #1a5c3a, #2e784c);
+      background: linear-gradient(135deg, #5DCAA5, #9FE1CB);
       border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 18px; color: #fff;
-      box-shadow: 0 4px 15px rgba(30, 92, 58, 0.3);
+      font-weight: 800; font-size: 18px; color: #0f172a;
+      box-shadow: 0 4px 15px rgba(93, 202, 165, 0.25);
     }
-    header span { font-size: 17px; font-weight: 600; letter-spacing: -0.3px; color: #1a2e1c; }
+    header span { font-size: 17px; font-weight: 600; letter-spacing: -0.3px; color: #E1F5EE; }
 
     /* Hero */
     .hero {
@@ -72,12 +89,12 @@
     }
     .app-icon {
       width: 100px; height: 100px;
-      background: linear-gradient(135deg, #1a5c3a, #2e784c);
+      background: linear-gradient(135deg, #1e293b, #334155);
       border-radius: 28px;
       display: flex; align-items: center; justify-content: center;
       margin: 0 auto 2rem;
       font-size: 44px; color: #fff;
-      box-shadow: 0 20px 50px rgba(30, 92, 58, 0.2);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
       position: relative;
     }
     .app-icon::after {
@@ -85,7 +102,7 @@
       position: absolute;
       inset: -4px;
       border-radius: 32px;
-      border: 2px solid rgba(46, 120, 76, 0.3);
+      border: 2px solid rgba(93, 202, 165, 0.25);
     }
     .hero h1 {
       font-size: 2.8rem;
@@ -93,14 +110,14 @@
       margin-bottom: 0.75rem;
       letter-spacing: -1px;
       line-height: 1.15;
-      background: linear-gradient(135deg, #0f2b1a 0%, #1a5c3a 50%, #1d9e75 100%);
+      background: linear-gradient(135deg, #5DCAA5 0%, #9FE1CB 50%, #E1F5EE 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     .hero .subtitle {
       font-size: 1.15rem;
-      color: #6b7a6d;
+      color: #7a8b7c;
       margin-bottom: 2.5rem;
       line-height: 1.7;
       font-weight: 300;
@@ -120,34 +137,34 @@
     }
     .btn-download svg { width: 20px; height: 20px; }
     .btn-windows {
-      background: #1a5c3a; color: #fff;
+      background: #f8fafc; color: #0f172a;
     }
-    .btn-windows svg { fill: #fff; }
+    .btn-windows svg { fill: #0f172a; }
     .btn-windows:hover {
-      background: #14472d;
+      background: #e2e8f0;
       transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(30, 92, 58, 0.25);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
     }
     .btn-android {
-      background: rgba(26, 92, 58, 0.08);
-      color: #1a5c3a;
-      border: 1px solid rgba(26, 92, 58, 0.2);
+      background: rgba(255, 255, 255, 0.04);
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.12);
       backdrop-filter: blur(10px);
     }
-    .btn-android svg { fill: #1a5c3a; }
+    .btn-android svg { fill: #f8fafc; }
     .btn-android:hover {
-      background: rgba(26, 92, 58, 0.14);
+      background: rgba(255, 255, 255, 0.08);
       transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(30, 92, 58, 0.12);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
     }
 
-    .meta { margin-top: 1.25rem; font-size: 13px; color: #8a9a8c; letter-spacing: 0.3px; }
+    .meta { margin-top: 1.25rem; font-size: 13px; color: rgba(248,250,252,0.35); letter-spacing: 0.3px; }
 
     /* Divider */
     .section-divider {
       width: 60px;
       height: 3px;
-      background: linear-gradient(90deg, #1a5c3a, #1d9e75);
+      background: linear-gradient(90deg, #5DCAA5, #9FE1CB);
       border-radius: 3px;
       margin: 0 auto 2.5rem;
     }
@@ -164,7 +181,7 @@
       text-align: center;
       font-size: 1.5rem;
       font-weight: 700;
-      color: #1a2e1c;
+      color: #f8fafc;
       margin-bottom: 1rem;
       letter-spacing: -0.5px;
     }
@@ -175,20 +192,20 @@
       margin-top: 2.5rem;
     }
     .card {
-      background: rgba(255, 255, 255, 0.6);
+      background: #1e293b;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(180, 160, 140, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 18px;
       padding: 2rem 1.5rem;
       transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
       text-align: center;
     }
     .card:hover {
-      background: rgba(255, 255, 255, 0.75);
+      background: #263348;
       transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
-      border-color: rgba(46, 120, 76, 0.2);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      border-color: rgba(93, 202, 165, 0.2);
     }
     .card .icon {
       font-size: 36px;
@@ -199,9 +216,9 @@
       font-size: 1rem;
       font-weight: 600;
       margin-bottom: 8px;
-      color: #1a2e1c;
+      color: #f8fafc;
     }
-    .card p { font-size: 0.875rem; color: #6b7a6d; line-height: 1.6; }
+    .card p { font-size: 0.875rem; color: rgba(248,250,252,0.55); line-height: 1.6; }
 
     /* Steps */
     .steps-section {
@@ -215,7 +232,7 @@
       font-size: 1.5rem;
       font-weight: 700;
       margin-bottom: 2rem;
-      color: #1a2e1c;
+      color: #f8fafc;
       text-align: center;
       letter-spacing: -0.5px;
     }
@@ -225,36 +242,36 @@
       gap: 18px;
       margin-bottom: 1.25rem;
       padding: 1.25rem 1.5rem;
-      background: rgba(255, 255, 255, 0.55);
+      background: #1e293b;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(180, 160, 140, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 14px;
       transition: all 0.3s ease;
     }
     .step:hover {
-      background: rgba(255, 255, 255, 0.7);
-      border-color: rgba(46, 120, 76, 0.2);
+      background: #263348;
+      border-color: rgba(93, 202, 165, 0.2);
     }
     .step-num {
       width: 32px; height: 32px; border-radius: 10px;
-      background: linear-gradient(135deg, #1a5c3a, #2e784c);
-      color: #fff;
+      background: linear-gradient(135deg, #5DCAA5, #9FE1CB);
+      color: #0f172a;
       font-size: 14px; font-weight: 700;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(30, 92, 58, 0.2);
+      box-shadow: 0 4px 12px rgba(93, 202, 165, 0.25);
     }
-    .step p { font-size: 0.925rem; color: #6b7a6d; line-height: 1.6; }
-    .step strong { color: #1a2e1c; }
+    .step p { font-size: 0.925rem; color: rgba(248,250,252,0.7); line-height: 1.6; }
+    .step strong { color: #f8fafc; }
 
     /* Footer */
     footer {
       text-align: center;
       padding: 2rem 1.5rem;
       font-size: 13px;
-      color: #8a9a8c;
-      border-top: 0.5px solid rgba(180, 160, 140, 0.2);
+      color: rgba(248,250,252,0.3);
+      border-top: 0.5px solid rgba(200, 180, 150, 0.1);
       letter-spacing: 0.3px;
       position: relative;
       z-index: 1;
@@ -272,6 +289,9 @@
 <body>
 
 <div class="sd-backdrop"></div>
+<div class="sd-float-math" aria-hidden="true">
+  <span>&#x222B;&#x222B;</span><span>&pi;</span><span>dV</span><span>&part;</span>
+</div>
 
 <header>
   <div class="logo">M</div>
@@ -345,5 +365,3 @@
 
 </body>
 </html>
-
- 
