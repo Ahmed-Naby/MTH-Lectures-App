@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MTH Lectures App</title>
+  <title>LectraHub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
   <style>
@@ -11,323 +11,561 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #0f172a;
-      color: #f8fafc;
+      background-color: #020813;
+      background-image: 
+        linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at 50% 300px, rgba(10, 77, 139, 0.25) 0%, transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(234, 88, 12, 0.08) 0%, transparent 50%);
+      background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%;
+      background-position: center top;
+      color: #e2e8f0;
       min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      line-height: 1.5;
     }
 
-    /* Backdrop from CourseSelectionPage (dark) */
-    .sd-backdrop {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background: #0f172a;
-      background-image:
-        radial-gradient(circle at 10% 20%, rgba(246,224,94,0.06) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(134,239,172,0.06) 0%, transparent 40%),
-        radial-gradient(circle at 90% 10%, rgba(255,127,80,0.04) 0%, transparent 40%);
-    }
-    .sd-backdrop::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(rgba(255,255,255,0.03) 2px, transparent 2px);
-      background-size: 32px 32px;
-      opacity: 0.5;
-    }
-
-    /* Floating math symbols */
-    .sd-float-math { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-    .sd-float-math span {
-      position: absolute;
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      color: rgba(255,255,255,0.02);
-      font-size: clamp(120px, 14vw, 220px);
-      user-select: none;
-      animation: sd-drift 26s ease-in-out infinite alternate;
-    }
-    .sd-float-math span:nth-child(1) { top: 10%; left: 6%; }
-    .sd-float-math span:nth-child(2) { top: 60%; left: 80%; animation-duration: 32s; animation-delay: -8s; }
-    .sd-float-math span:nth-child(3) { top: 38%; left: 48%; font-size: clamp(80px, 8vw, 140px); animation-delay: -12s; }
-    .sd-float-math span:nth-child(4) { top: 82%; left: 14%; font-size: clamp(90px, 10vw, 160px); animation-delay: -4s; }
-    @keyframes sd-drift { 0%{transform:translate3d(0,0,0) rotate(0)} 100%{transform:translate3d(40px,-30px,0) rotate(8deg)} }
-
-    /* Header */
+    /* Sticky Glass Header */
     header {
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(3, 5, 12, 0.6);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-bottom: 0.5px solid rgba(200, 180, 150, 0.1);
-      color: #E1F5EE;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+      color: #fff;
       padding: 1rem 2rem;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       position: sticky;
       top: 0;
       z-index: 100;
     }
     header .logo {
-      width: 42px; height: 42px;
-      background: linear-gradient(135deg, #5DCAA5, #9FE1CB);
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 18px; color: #0f172a;
-      box-shadow: 0 4px 15px rgba(93, 202, 165, 0.25);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: 0 0 12px rgba(249, 115, 22, 0.25);
+      border: 1px solid rgba(249, 115, 22, 0.2);
     }
-    header span { font-size: 17px; font-weight: 600; letter-spacing: -0.3px; color: #E1F5EE; }
+    header span {
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: #f1f5f9;
+    }
 
-    /* Hero */
+    /* Hero Section */
     .hero {
       text-align: center;
-      padding: 6rem 1.5rem 4rem;
-      max-width: 720px;
+      padding: 1.5rem 1.5rem 3rem;
+      max-width: 760px;
       margin: 0 auto;
-      position: relative;
-      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .app-icon {
-      width: 100px; height: 100px;
-      background: linear-gradient(135deg, #1e293b, #334155);
-      border-radius: 28px;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 2rem;
-      font-size: 44px; color: #fff;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+
+    /* 3D Glowing Orb */
+    .orb-container {
       position: relative;
+      width: 320px;
+      height: 320px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .app-icon::after {
-      content: '';
+    .orb-glow {
       position: absolute;
-      inset: -4px;
-      border-radius: 32px;
-      border: 2px solid rgba(93, 202, 165, 0.25);
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, transparent 70%);
+      filter: blur(8px);
+      z-index: 1;
+      pointer-events: none;
     }
-    .hero h1 {
-      font-size: 2.8rem;
+    .orb {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ffedd5 0%, #f97316 40%, #c2410c 70%, #431407 100%);
+      box-shadow: 
+        inset -8px -8px 20px rgba(0, 0, 0, 0.95),
+        inset 8px 8px 16px rgba(255, 255, 255, 0.3),
+        0 0 45px rgba(249, 115, 22, 0.5),
+        0 0 90px rgba(249, 115, 22, 0.25);
+      z-index: 2;
+      position: relative;
+      animation: float 6s ease-in-out infinite;
+    }
+    .orb-orbit {
+      position: absolute;
+      border: 1px solid rgba(59, 130, 246, 0.12);
+      border-radius: 50%;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .orb-orbit-1 {
+      width: 120px;
+      height: 120px;
+      border-color: rgba(59, 130, 246, 0.25);
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.05);
+    }
+    .orb-orbit-2 {
+      width: 160px;
+      height: 160px;
+      border-color: rgba(59, 130, 246, 0.18);
+    }
+    .orb-orbit-3 {
+      width: 200px;
+      height: 200px;
+      border-color: rgba(59, 130, 246, 0.12);
+    }
+    .orb-orbit-4 {
+      width: 250px;
+      height: 250px;
+      border-color: rgba(59, 130, 246, 0.07);
+    }
+    .orb-orbit-5 {
+      width: 310px;
+      height: 310px;
+      border-color: rgba(59, 130, 246, 0.03);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Release Tag */
+    .new-release-tag {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: #ff9d5c;
+      margin-bottom: 1.25rem;
+      display: inline-block;
+      opacity: 0.85;
+      text-shadow: 0 0 10px rgba(249, 115, 22, 0.3);
+    }
+
+    /* Hero Typography & Brand logo */
+    .hero-brand-title {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .brand-lectra {
       font-weight: 800;
-      margin-bottom: 0.75rem;
-      letter-spacing: -1px;
-      line-height: 1.15;
-      background: linear-gradient(135deg, #5DCAA5 0%, #9FE1CB 50%, #E1F5EE 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-size: 48px;
+      letter-spacing: 2px;
+      color: #0091ff;
+      text-shadow: 0 0 15px rgba(0, 145, 255, 0.25);
+    }
+
+    .brand-hub {
+      font-weight: 800;
+      font-size: 38px;
+      letter-spacing: 0.5px;
+      color: #fff;
+      background: #ea580c;
+      padding: 3px 16px;
+      border-radius: 12px;
+      margin-left: 8px;
+    }
+
+    .highlight-available {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+    }
+
+    /* Header Brand logo scaling */
+    header .header-brand .brand-lectra {
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+    header .header-brand .brand-hub {
+      font-size: 16px;
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      margin-left: 4px;
+      color: #fff;
     }
     .hero .subtitle {
-      font-size: 1.15rem;
-      color: #7a8b7c;
+      font-size: 1.35rem;
+      color: #ff8f3d;
       margin-bottom: 2.5rem;
       line-height: 1.7;
-      font-weight: 300;
+      font-weight: 400;
+      max-width: 600px;
+      text-shadow: 0 0 12px rgba(234, 88, 12, 0.2);
     }
 
     /* Download Buttons */
     .download-buttons {
-      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
     }
     .btn-download {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 15px 32px; border-radius: 14px;
-      font-size: 0.95rem; font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      font-weight: 500;
       text-decoration: none;
-      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-      letter-spacing: -0.2px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      letter-spacing: -0.01em;
     }
-    .btn-download svg { width: 20px; height: 20px; }
+    .btn-download svg {
+      width: 18px;
+      height: 18px;
+    }
     .btn-windows {
-      background: #f8fafc; color: #0f172a;
+      background: #ffffff;
+      color: #03050c;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
     }
-    .btn-windows svg { fill: #0f172a; }
+    .btn-windows svg {
+      fill: #03050c;
+    }
     .btn-windows:hover {
-      background: #e2e8f0;
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+      background: #f1f5f9;
+      transform: translateY(-2px);
+      box-shadow: 
+        0 10px 25px rgba(255, 255, 255, 0.15),
+        0 0 15px rgba(249, 115, 22, 0.25);
     }
     .btn-android {
-      background: rgba(255, 255, 255, 0.04);
-      color: #f8fafc;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(10px);
+      background: rgba(59, 130, 246, 0.08);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
-    .btn-android svg { fill: #f8fafc; }
+    .btn-android svg {
+      fill: #60a5fa;
+    }
     .btn-android:hover {
-      background: rgba(255, 255, 255, 0.08);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      background: rgba(59, 130, 246, 0.15);
+      border-color: rgba(59, 130, 246, 0.5);
+      color: #93c5fd;
+      transform: translateY(-2px);
+      box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(59, 130, 246, 0.2);
+    }
+    .btn-android:hover svg {
+      fill: #93c5fd;
     }
 
-    .meta { margin-top: 1.25rem; font-size: 13px; color: rgba(248,250,252,0.35); letter-spacing: 0.3px; }
-
-    /* Divider */
-    .section-divider {
-      width: 60px;
-      height: 3px;
-      background: linear-gradient(90deg, #5DCAA5, #9FE1CB);
-      border-radius: 3px;
-      margin: 0 auto 2.5rem;
+    .meta {
+      margin-top: 1.75rem;
+      font-size: 0.8rem;
+      color: #64748b;
+      letter-spacing: 0.05em;
+      font-weight: 400;
     }
 
-    /* Features */
+    /* Section Separator Badge Divider */
+    .divider-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 900px;
+      margin: 4.5rem auto 3rem;
+      padding: 0 1.5rem;
+    }
+    .divider-line {
+      flex-grow: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.15), transparent);
+    }
+    .divider-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      background: rgba(10, 8, 20, 0.6);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #60a5fa;
+      letter-spacing: 0.12em;
+      text-shadow: 0 0 8px rgba(96, 165, 250, 0.3);
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.05);
+    }
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #f97316;
+      box-shadow: 0 0 8px #f97316;
+    }
+
+    /* Features Grid */
     .features-section {
       max-width: 900px;
       margin: 0 auto;
-      padding: 0 1.5rem 4rem;
-      position: relative;
-      z-index: 1;
-    }
-    .features-section h2 {
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #f8fafc;
-      margin-bottom: 1rem;
-      letter-spacing: -0.5px;
+      padding: 0 1.5rem;
     }
     .cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-top: 2.5rem;
+      gap: 24px;
     }
     .card {
-      background: #1e293b;
+      background: rgba(10, 8, 20, 0.4);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 18px;
-      padding: 2rem 1.5rem;
-      transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+      border: 1px solid rgba(59, 130, 246, 0.1);
+      border-radius: 20px;
+      padding: 2.5rem 1.75rem;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.25), transparent);
     }
     .card:hover {
-      background: #263348;
-      transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-      border-color: rgba(93, 202, 165, 0.2);
+      background: rgba(15, 12, 30, 0.55);
+      transform: translateY(-5px);
+      border-color: rgba(59, 130, 246, 0.3);
+      box-shadow: 
+        0 15px 30px rgba(0, 0, 0, 0.4),
+        0 0 25px rgba(59, 130, 246, 0.12);
     }
     .card .icon {
-      font-size: 36px;
-      margin-bottom: 16px;
-      display: block;
+      font-size: 30px;
+      margin-bottom: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      background: rgba(59, 130, 246, 0.05);
+      border-radius: 50%;
+      border: 1px solid rgba(59, 130, 246, 0.12);
+      transition: all 0.3s ease;
+    }
+    .card:hover .icon {
+      transform: scale(1.1);
+      background: rgba(59, 130, 246, 0.1);
+      border-color: rgba(249, 115, 22, 0.4);
+      box-shadow: 0 0 15px rgba(249, 115, 22, 0.15);
     }
     .card h3 {
-      font-size: 1rem;
+      font-size: 1.15rem;
       font-weight: 600;
-      margin-bottom: 8px;
-      color: #f8fafc;
+      margin-bottom: 12px;
+      color: #fff;
+      letter-spacing: -0.01em;
     }
-    .card p { font-size: 0.875rem; color: rgba(248,250,252,0.55); line-height: 1.6; }
+    .card p { 
+      font-size: 0.9rem; 
+      color: #94a3b8; 
+      line-height: 1.6; 
+    }
 
-    /* Steps */
+    /* Installation Steps */
     .steps-section {
-      max-width: 560px;
-      margin: 0 auto 4rem;
+      max-width: 680px;
+      margin: 0 auto;
       padding: 0 1.5rem;
-      position: relative;
-      z-index: 1;
     }
-    .steps-section h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 2rem;
-      color: #f8fafc;
-      text-align: center;
-      letter-spacing: -0.5px;
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
     .step {
       display: flex;
-      align-items: flex-start;
-      gap: 18px;
-      margin-bottom: 1.25rem;
-      padding: 1.25rem 1.5rem;
-      background: #1e293b;
+      align-items: center;
+      gap: 20px;
+      padding: 1.5rem 1.75rem;
+      background: rgba(10, 8, 20, 0.35);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 14px;
-      transition: all 0.3s ease;
+      border: 1px solid rgba(59, 130, 246, 0.08);
+      border-radius: 18px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
     }
     .step:hover {
-      background: #263348;
-      border-color: rgba(93, 202, 165, 0.2);
+      background: rgba(15, 12, 30, 0.5);
+      border-color: rgba(59, 130, 246, 0.2);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     }
     .step-num {
-      width: 32px; height: 32px; border-radius: 10px;
-      background: linear-gradient(135deg, #5DCAA5, #9FE1CB);
-      color: #0f172a;
-      font-size: 14px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
+      width: 36px; 
+      height: 36px; 
+      border-radius: 50%;
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      color: #60a5fa;
+      font-size: 15px; 
+      font-weight: 700;
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(93, 202, 165, 0.25);
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.1);
+      transition: all 0.3s ease;
     }
-    .step p { font-size: 0.925rem; color: rgba(248,250,252,0.7); line-height: 1.6; }
-    .step strong { color: #f8fafc; }
+    .step:hover .step-num {
+      background: #f97316;
+      color: #fff;
+      border-color: #f97316;
+      box-shadow: 0 0 20px rgba(249, 115, 22, 0.35);
+    }
+    .step p { 
+      font-size: 0.95rem; 
+      color: #cbd5e1; 
+      line-height: 1.6; 
+    }
+    .step strong { 
+      color: #fff; 
+      font-weight: 600; 
+    }
 
     /* Footer */
     footer {
       text-align: center;
-      padding: 2rem 1.5rem;
-      font-size: 13px;
-      color: rgba(248,250,252,0.3);
-      border-top: 0.5px solid rgba(200, 180, 150, 0.1);
-      letter-spacing: 0.3px;
-      position: relative;
-      z-index: 1;
+      padding: 4rem 1.5rem;
+      font-size: 0.8rem;
+      color: #475569;
+      border-top: 1px solid rgba(59, 130, 246, 0.06);
+      background: rgba(3, 5, 12, 0.4);
+      margin-top: 6rem;
+      letter-spacing: 0.02em;
     }
 
-    /* Responsive */
-    @media (max-width: 700px) {
-      .hero { padding: 4rem 1.5rem 3rem; }
-      .hero h1 { font-size: 2rem; }
-      .cards { grid-template-columns: 1fr; }
-      .btn-download { width: 100%; justify-content: center; }
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 1rem 1.5rem 2rem;
+      }
+      .orb-container {
+        width: 240px;
+        height: 240px;
+      }
+      .orb {
+        width: 75px;
+        height: 75px;
+      }
+      .orb-orbit-1 { width: 100px; height: 100px; }
+      .orb-orbit-2 { width: 130px; height: 130px; }
+      .orb-orbit-3 { width: 165px; height: 165px; }
+      .orb-orbit-4 { width: 200px; height: 200px; }
+      .orb-orbit-5 { width: 240px; height: 240px; }
+      
+      .cards { 
+        grid-template-columns: 1fr; 
+        gap: 16px;
+      }
+      .btn-download { 
+        width: 100%; 
+        justify-content: center; 
+      }
+      .highlight-available {
+        font-size: 2rem;
+      }
+      .hero .subtitle {
+        font-size: 1.15rem;
+      }
+    }
+
+    /* Mobile branding overrides */
+    @media (max-width: 480px) {
+      .brand-lectra { font-size: 36px; }
+      .brand-hub { font-size: 30px; }
+      .highlight-available { font-size: 2.2rem; }
     }
   </style>
 </head>
 <body>
 
-<div class="sd-backdrop"></div>
-<div class="sd-float-math" aria-hidden="true">
-  <span>&#x222B;&#x222B;</span><span>&pi;</span><span>dV</span><span>&part;</span>
-</div>
-
 <header>
-  <div class="logo">M</div>
-  <span>MTH Lectures App</span>
+  <img src="icon.png" alt="Logo" class="logo">
+  <span>LectraHub</span>
 </header>
 
 <div class="hero">
-  <div class="app-icon"><img src="icon.png" alt="M" style="width: 120%; height: 120%; object-fit: cover; border-radius: inherit;"></div>
-  <h1>MTH Lectures App</h1>
-  <p class="subtitle">Your complete mathematics lecture companion</p>
+  <div class="orb-container">
+    <div class="orb-glow"></div>
+    <div class="orb"></div>
+    <div class="orb-orbit orb-orbit-1"></div>
+    <div class="orb-orbit orb-orbit-2"></div>
+    <div class="orb-orbit orb-orbit-3"></div>
+    <div class="orb-orbit orb-orbit-4"></div>
+    <div class="orb-orbit orb-orbit-5"></div>
+  </div>
+  <div class="new-release-tag">A NEW RELEASE &middot; 1.2.9</div>
+  <div class="hero-brand-title">
+    <h1 class="brand-logo">
+      <span class="brand-lectra">LECTRA</span>
+      <span class="brand-hub">hub</span>
+    </h1>
+    <span class="highlight-available">is available.</span>
+  </div>
+  <p class="subtitle">Your complete learning companion</p>
   <div class="download-buttons">
-
-    <a class="btn-download btn-windows" href="https://github.com/Ahmed-Naby/MTH-Lectures-App/releases/download/version/MTH.Lectures.Setup.1.2.1.exe">
+    <a class="btn-download btn-windows" href="https://github.com/Ahmed-Naby/MTH-Lectures-App/releases/download/version/MTH.Lectures.Setup.1.2.9.exe">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 12V6.75l6-1.32v6.48L3 12zm6.16.09l8.11-.09V2.45L9.16 3.8v8.29zM17.27 12.21L9.16 12.3v8.37l8.11 1.3V12.21zM9 12.41l-6 .09V18.6l6 1.2v-7.39z"/>
       </svg>
       Download for Windows
     </a>
-    <a class="btn-download btn-android" href="https://drive.google.com/file/d/1u-XcdXZYtNfY07CFnjPkQQuSTQrPEQNP/view?usp=drive_link">
+    <a class="btn-download btn-android" href="https://drive.google.com/file/d/15-0ahNQO47oyMYTz0VGNDhrtz0cO7_t_/view?usp=sharing">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zM3.5 8C2.67 8 2 8.67 2 9.5v7c0 .83.67 1.5 1.5 1.5S5 17.33 5 16.5v-7C5 8.67 4.33 8 3.5 8zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zm-4.97-5.84l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48A5.84 5.84 0 0012 1c-.96 0-1.86.23-2.66.63L7.85.15c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31A5.983 5.983 0 006 7h12c0-2.21-1.2-4.15-2.97-5.18-.15-.09-.3-.18-.46-.26-.02-.01-.03-.02-.04-.03zM10 5H9V4h1v1zm5 0h-1V4h1v1z"/>
       </svg>
       Download for Android
     </a>
   </div>
-  <p class="meta">Version 1.2.1 &nbsp;·&nbsp; Windows 7 / 10 / 11 &nbsp;·&nbsp; Android</p>
+  <p class="meta">Version 1.2.9 &nbsp;&middot;&nbsp; Windows 10 / 11 &nbsp;&middot;&nbsp; Android</p>
+</div>
+
+<div class="divider-container">
+  <div class="divider-line"></div>
+  <div class="divider-badge"><span class="badge-dot"></span> FEATURES</div>
+  <div class="divider-line"></div>
 </div>
 
 <div class="features-section">
-  <h2>Features</h2>
-  <div class="section-divider"></div>
   <div class="cards">
     <div class="card">
       <div class="icon">📚</div>
       <h3>All-in-One</h3>
-      <p>Slides, videos, sheets, announcements and grades. Everything in One App</p>
+      <p>Slides, videos, sheets, quizes, announcements and grades. Everything in One App</p>
     </div>
     <div class="card">
       <div class="icon">📶</div>
@@ -342,25 +580,31 @@
   </div>
 </div>
 
+<div class="divider-container">
+  <div class="divider-line"></div>
+  <div class="divider-badge"><span class="badge-dot"></span> INSTALLATION</div>
+  <div class="divider-line"></div>
+</div>
+
 <div class="steps-section">
-  <h2>How to install</h2>
-  <div class="section-divider"></div>
-  <div class="step">
-    <div class="step-num">1</div>
-    <p>Click the download button above and save the installer file</p>
-  </div>
-  <div class="step">
-    <div class="step-num">2</div>
-    <p>Open the downloaded <strong>.exe</strong> or <strong>.apk</strong> file and follow the setup</p>
-  </div>
-  <div class="step">
-    <div class="step-num">3</div>
-    <p>Launch <strong>MTH Lectures App</strong> and start studying</p>
+  <div class="steps-list">
+    <div class="step">
+      <div class="step-num">1</div>
+      <p>Click the download button above and save the installer file</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <p>Open the downloaded <strong>.exe</strong> or <strong>.apk</strong> file and follow the setup</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <p>Launch <strong>LectraHub</strong> and start studying</p>
+    </div>
   </div>
 </div>
 
 <footer>
-  &copy; 2027  MTH Lectures, Dr. Ahmed Abdel-Naby &nbsp;·&nbsp; All Rights Reserved.
+  &copy; 2027 LectraHub, Dr. Ahmed Abdel-Naby &nbsp;&middot;&nbsp; All Rights Reserved
 </footer>
 
 </body>
