@@ -12,7 +12,7 @@
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: #020813;
-      background-image: 
+      background-image:
         linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px),
         radial-gradient(circle at 50% 300px, rgba(10, 77, 139, 0.25) 0%, transparent 60%),
@@ -26,37 +26,51 @@
       line-height: 1.5;
     }
 
-    /* Sticky Glass Header */
+    /* ── Sticky Glass Header ── */
     header {
       background: rgba(3, 5, 12, 0.6);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(59, 130, 246, 0.1);
       color: #fff;
-      padding: 1rem 2rem;
+      padding: 0.85rem 2rem;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       position: sticky;
       top: 0;
       z-index: 100;
     }
     header .logo {
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
       border-radius: 8px;
       object-fit: cover;
       box-shadow: 0 0 12px rgba(249, 115, 22, 0.25);
       border: 1px solid rgba(249, 115, 22, 0.2);
     }
-    header span {
-      font-size: 1rem;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      color: #f1f5f9;
+    .header-brand {
+      display: inline-flex;
+      align-items: center;
+    }
+    header .header-brand .brand-lectra {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #0091ff;
+    }
+    header .header-brand .brand-hub {
+      font-size: 14px;
+      font-weight: 800;
+      background: #ea580c;
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 7px;
+      margin-left: 5px;
+      letter-spacing: 0.5px;
     }
 
-    /* Hero Section */
+    /* ── Hero Section ── */
     .hero {
       text-align: center;
       padding: 1.5rem 1.5rem 3rem;
@@ -67,7 +81,7 @@
       align-items: center;
     }
 
-    /* 3D Glowing Orb */
+    /* ── 3D Glowing Orb ── */
     .orb-container {
       position: relative;
       width: 320px;
@@ -91,7 +105,7 @@
       height: 90px;
       border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #ffedd5 0%, #f97316 40%, #c2410c 70%, #431407 100%);
-      box-shadow: 
+      box-shadow:
         inset -8px -8px 20px rgba(0, 0, 0, 0.95),
         inset 8px 8px 16px rgba(255, 255, 255, 0.3),
         0 0 45px rgba(249, 115, 22, 0.5),
@@ -107,39 +121,67 @@
       z-index: 1;
       pointer-events: none;
     }
-    .orb-orbit-1 {
+    .orb-orbit-1 { width: 120px; height: 120px; border-color: rgba(59, 130, 246, 0.25); }
+    .orb-orbit-2 { width: 160px; height: 160px; border-color: rgba(59, 130, 246, 0.18); }
+    .orb-orbit-3 { width: 200px; height: 200px; border-color: rgba(59, 130, 246, 0.12); }
+    .orb-orbit-4 { width: 250px; height: 250px; border-color: rgba(59, 130, 246, 0.07); }
+    .orb-orbit-5 { width: 310px; height: 310px; border-color: rgba(59, 130, 246, 0.03); }
+
+    /* Rotating orbit dot */
+    .orbit-dot-wrapper {
+      position: absolute;
       width: 120px;
       height: 120px;
-      border-color: rgba(59, 130, 246, 0.25);
-      box-shadow: 0 0 10px rgba(59, 130, 246, 0.05);
+      animation: orbit-spin 4s linear infinite;
+      z-index: 3;
+      pointer-events: none;
     }
-    .orb-orbit-2 {
-      width: 160px;
-      height: 160px;
-      border-color: rgba(59, 130, 246, 0.18);
+    .orbit-dot {
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #f97316;
+      box-shadow: 0 0 10px rgba(249, 115, 22, 0.9), 0 0 22px rgba(249, 115, 22, 0.45);
     }
-    .orb-orbit-3 {
+    /* Second dot on outer ring, counter-rotating */
+    .orbit-dot-wrapper-2 {
+      position: absolute;
       width: 200px;
       height: 200px;
-      border-color: rgba(59, 130, 246, 0.12);
+      animation: orbit-spin-reverse 9s linear infinite;
+      z-index: 3;
+      pointer-events: none;
     }
-    .orb-orbit-4 {
-      width: 250px;
-      height: 250px;
-      border-color: rgba(59, 130, 246, 0.07);
-    }
-    .orb-orbit-5 {
-      width: 310px;
-      height: 310px;
-      border-color: rgba(59, 130, 246, 0.03);
+    .orbit-dot-2 {
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #60a5fa;
+      box-shadow: 0 0 8px rgba(96, 165, 250, 0.9), 0 0 18px rgba(96, 165, 250, 0.4);
     }
 
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-6px); }
     }
+    @keyframes orbit-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    @keyframes orbit-spin-reverse {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(-360deg); }
+    }
 
-    /* Release Tag */
+    /* ── Release Tag ── */
     .new-release-tag {
       font-size: 0.85rem;
       font-weight: 600;
@@ -152,7 +194,7 @@
       text-shadow: 0 0 10px rgba(249, 115, 22, 0.3);
     }
 
-    /* Hero Typography & Brand logo */
+    /* ── Hero Brand Title ── */
     .hero-brand-title {
       display: flex;
       flex-direction: row;
@@ -162,12 +204,10 @@
       margin-bottom: 1.5rem;
       flex-wrap: wrap;
     }
-    
     .brand-logo {
       display: inline-flex;
       align-items: center;
     }
-
     .brand-lectra {
       font-weight: 800;
       font-size: 48px;
@@ -175,7 +215,6 @@
       color: #0091ff;
       text-shadow: 0 0 15px rgba(0, 145, 255, 0.25);
     }
-
     .brand-hub {
       font-weight: 800;
       font-size: 38px;
@@ -185,27 +224,6 @@
       padding: 3px 16px;
       border-radius: 12px;
       margin-left: 8px;
-    }
-
-    .highlight-available {
-      font-size: 3rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: #ffffff;
-    }
-
-    /* Header Brand logo scaling */
-    header .header-brand .brand-lectra {
-      font-size: 20px;
-      letter-spacing: 1px;
-    }
-    header .header-brand .brand-hub {
-      font-size: 16px;
-      background: transparent;
-      padding: 0;
-      border-radius: 0;
-      margin-left: 4px;
-      color: #fff;
     }
     .hero .subtitle {
       font-size: 1.35rem;
@@ -217,7 +235,7 @@
       text-shadow: 0 0 12px rgba(234, 88, 12, 0.2);
     }
 
-    /* Download Buttons */
+    /* ── Download Buttons ── */
     .download-buttons {
       display: flex;
       gap: 16px;
@@ -237,24 +255,17 @@
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       letter-spacing: -0.01em;
     }
-    .btn-download svg {
-      width: 18px;
-      height: 18px;
-    }
+    .btn-download svg { width: 18px; height: 18px; }
     .btn-windows {
       background: #ffffff;
       color: #03050c;
       box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
     }
-    .btn-windows svg {
-      fill: #03050c;
-    }
+    .btn-windows svg { fill: #03050c; }
     .btn-windows:hover {
       background: #f1f5f9;
       transform: translateY(-2px);
-      box-shadow: 
-        0 10px 25px rgba(255, 255, 255, 0.15),
-        0 0 15px rgba(249, 115, 22, 0.25);
+      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15), 0 0 15px rgba(249, 115, 22, 0.25);
     }
     .btn-android {
       background: rgba(59, 130, 246, 0.08);
@@ -262,21 +273,15 @@
       border: 1px solid rgba(59, 130, 246, 0.25);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
-    .btn-android svg {
-      fill: #60a5fa;
-    }
+    .btn-android svg { fill: #60a5fa; }
     .btn-android:hover {
       background: rgba(59, 130, 246, 0.15);
       border-color: rgba(59, 130, 246, 0.5);
       color: #93c5fd;
       transform: translateY(-2px);
-      box-shadow: 
-        0 10px 25px rgba(0, 0, 0, 0.3),
-        0 0 15px rgba(59, 130, 246, 0.2);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(59, 130, 246, 0.2);
     }
-    .btn-android:hover svg {
-      fill: #93c5fd;
-    }
+    .btn-android:hover svg { fill: #93c5fd; }
 
     .meta {
       margin-top: 1.75rem;
@@ -286,7 +291,47 @@
       font-weight: 400;
     }
 
-    /* Section Separator Badge Divider */
+    /* ── Stats Strip ── */
+    .stats-strip {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2.75rem;
+      width: 100%;
+      max-width: 480px;
+    }
+    .stat-card {
+      flex: 1;
+      min-width: 120px;
+      background: rgba(10, 8, 20, 0.45);
+      border: 1px solid rgba(59, 130, 246, 0.12);
+      border-radius: 16px;
+      padding: 1rem 1.25rem;
+      text-align: center;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .stat-card:hover {
+      border-color: rgba(249, 115, 22, 0.3);
+      box-shadow: 0 0 18px rgba(249, 115, 22, 0.08);
+    }
+    .stat-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .stat-label {
+      font-size: 0.68rem;
+      color: #64748b;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ── Section Separator Badge Divider ── */
     .divider-container {
       display: flex;
       align-items: center;
@@ -323,7 +368,7 @@
       box-shadow: 0 0 8px #f97316;
     }
 
-    /* Features Grid */
+    /* ── Features Grid ── */
     .features-section {
       max-width: 900px;
       margin: 0 auto;
@@ -349,9 +394,7 @@
     .card::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.25), transparent);
     }
@@ -359,9 +402,7 @@
       background: rgba(15, 12, 30, 0.55);
       transform: translateY(-5px);
       border-color: rgba(59, 130, 246, 0.3);
-      box-shadow: 
-        0 15px 30px rgba(0, 0, 0, 0.4),
-        0 0 25px rgba(59, 130, 246, 0.12);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 25px rgba(59, 130, 246, 0.12);
     }
     .card .icon {
       font-size: 30px;
@@ -383,19 +424,77 @@
       box-shadow: 0 0 15px rgba(249, 115, 22, 0.15);
     }
     .card h3 {
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       font-weight: 600;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       color: #fff;
       letter-spacing: -0.01em;
     }
-    .card p { 
-      font-size: 0.9rem; 
-      color: #94a3b8; 
-      line-height: 1.6; 
+    .card p {
+      font-size: 0.875rem;
+      color: #94a3b8;
+      line-height: 1.6;
     }
 
-    /* Installation Steps */
+    /* ── Faculty / About Section ── */
+    .about-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .faculty-card {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      min-height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .faculty-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('FacultyOfEngineering.jpg');
+      background-size: cover;
+      background-position: center 40%;
+      filter: blur(3px) brightness(0.2);
+      transform: scale(1.06);
+    }
+    .faculty-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+    .faculty-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #f97316;
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      margin-bottom: 1rem;
+    }
+    .faculty-content h2 {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+    .faculty-content p {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      max-width: 460px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── Installation Steps ── */
     .steps-section {
       max-width: 680px;
       margin: 0 auto;
@@ -425,16 +524,16 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     }
     .step-num {
-      width: 36px; 
-      height: 36px; 
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: rgba(59, 130, 246, 0.08);
       border: 1px solid rgba(59, 130, 246, 0.25);
       color: #60a5fa;
-      font-size: 15px; 
+      font-size: 15px;
       font-weight: 700;
-      display: flex; 
-      align-items: center; 
+      display: flex;
+      align-items: center;
       justify-content: center;
       flex-shrink: 0;
       box-shadow: 0 0 15px rgba(59, 130, 246, 0.1);
@@ -446,68 +545,111 @@
       border-color: #f97316;
       box-shadow: 0 0 20px rgba(249, 115, 22, 0.35);
     }
-    .step p { 
-      font-size: 0.95rem; 
-      color: #cbd5e1; 
-      line-height: 1.6; 
-    }
-    .step strong { 
-      color: #fff; 
-      font-weight: 600; 
-    }
+    .step p { font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; }
+    .step strong { color: #fff; font-weight: 600; }
 
-    /* Footer */
+    /* ── Footer ── */
     footer {
       text-align: center;
-      padding: 4rem 1.5rem;
-      font-size: 0.8rem;
-      color: #475569;
-      border-top: 1px solid rgba(59, 130, 246, 0.06);
-      background: rgba(3, 5, 12, 0.4);
+      padding: 4rem 1.5rem 3rem;
+      border-top: 1px solid rgba(59, 130, 246, 0.08);
+      background: rgba(3, 5, 12, 0.5);
       margin-top: 6rem;
-      letter-spacing: 0.02em;
+    }
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+    .footer-brand .brand-lectra {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: #0091ff;
+      text-shadow: 0 0 12px rgba(0, 145, 255, 0.2);
+    }
+    .footer-brand .brand-hub {
+      font-size: 17px;
+      font-weight: 800;
+      background: #ea580c;
+      color: #fff;
+      padding: 2px 10px;
+      border-radius: 8px;
+      margin-left: 6px;
+      letter-spacing: 0.5px;
+    }
+    .footer-tagline {
+      font-size: 0.82rem;
+      color: #475569;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.04em;
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.75rem;
+    }
+    .footer-links a {
+      font-size: 0.8rem;
+      color: #60a5fa;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+    }
+    .footer-links a:hover { opacity: 1; }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: #334155;
+      letter-spacing: 0.04em;
     }
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .hero {
-        padding: 1rem 1.5rem 2rem;
-      }
-      .orb-container {
-        width: 240px;
-        height: 240px;
-      }
-      .orb {
-        width: 75px;
-        height: 75px;
-      }
+    /* ── Scroll Fade-Up Animation ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .card:nth-child(2) { transition-delay: 0.08s; }
+    .card:nth-child(3) { transition-delay: 0.16s; }
+    .card:nth-child(4) { transition-delay: 0.08s; }
+    .card:nth-child(5) { transition-delay: 0.16s; }
+    .card:nth-child(6) { transition-delay: 0.24s; }
+    .step:nth-child(2) { transition-delay: 0.1s; }
+    .step:nth-child(3) { transition-delay: 0.2s; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .cards { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .hero { padding: 1rem 1.5rem 2rem; }
+      .orb-container { width: 240px; height: 240px; }
+      .orb { width: 75px; height: 75px; }
       .orb-orbit-1 { width: 100px; height: 100px; }
       .orb-orbit-2 { width: 130px; height: 130px; }
       .orb-orbit-3 { width: 165px; height: 165px; }
       .orb-orbit-4 { width: 200px; height: 200px; }
       .orb-orbit-5 { width: 240px; height: 240px; }
-      
-      .cards { 
-        grid-template-columns: 1fr; 
-        gap: 16px;
-      }
-      .btn-download { 
-        width: 100%; 
-        justify-content: center; 
-      }
-      .highlight-available {
-        font-size: 2rem;
-      }
-      .hero .subtitle {
-        font-size: 1.15rem;
-      }
-    }
-
-    /* Mobile branding overrides */
-    @media (max-width: 480px) {
+      .orbit-dot-wrapper { width: 100px; height: 100px; }
+      .orbit-dot-wrapper-2 { width: 165px; height: 165px; }
+      .cards { grid-template-columns: 1fr; gap: 16px; }
+      .btn-download { width: 100%; justify-content: center; }
       .brand-lectra { font-size: 36px; }
       .brand-hub { font-size: 30px; }
-      .highlight-available { font-size: 2.2rem; }
+      .hero .subtitle { font-size: 1.15rem; }
+      .faculty-content h2 { font-size: 1.35rem; }
+    }
+    @media (max-width: 480px) {
+      .stats-strip { gap: 10px; }
+      .stat-card { min-width: 100px; padding: 0.85rem 1rem; }
     }
   </style>
 </head>
@@ -515,7 +657,10 @@
 
 <header>
   <img src="icon.png" alt="Logo" class="logo">
-  <span>LectraHub</span>
+  <div class="header-brand">
+    <span class="brand-lectra">LECTRA</span>
+    <span class="brand-hub">hub</span>
+  </div>
 </header>
 
 <div class="hero">
@@ -527,6 +672,8 @@
     <div class="orb-orbit orb-orbit-3"></div>
     <div class="orb-orbit orb-orbit-4"></div>
     <div class="orb-orbit orb-orbit-5"></div>
+    <div class="orbit-dot-wrapper"><div class="orbit-dot"></div></div>
+    <div class="orbit-dot-wrapper-2"><div class="orbit-dot-2"></div></div>
   </div>
   <div class="new-release-tag">A NEW RELEASE &middot; 1.2.9</div>
   <div class="hero-brand-title">
@@ -551,6 +698,21 @@
     </a>
   </div>
   <p class="meta">Windows 10 / 11 &nbsp;&middot;&nbsp; Android</p>
+
+  <div class="stats-strip">
+    <div class="stat-card">
+      <div class="stat-value">v 1.2.9</div>
+      <div class="stat-label">Latest Release</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">2 Platforms</div>
+      <div class="stat-label">Win &amp; Android</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">Free</div>
+      <div class="stat-label">Always</div>
+    </div>
+  </div>
 </div>
 
 <div class="divider-container">
@@ -561,20 +723,52 @@
 
 <div class="features-section">
   <div class="cards">
-    <div class="card">
+    <div class="card fade-up">
       <div class="icon">📚</div>
       <h3>All-in-One</h3>
-      <p>Slides, videos, sheets, quizes, announcements and grades. Everything in One App</p>
+      <p>Slides, videos, sheets and more — everything in one place</p>
     </div>
-    <div class="card">
+    <div class="card fade-up">
       <div class="icon">📶</div>
       <h3>Offline Access</h3>
-      <p>Use the app anytime without an internet connection</p>
+      <p>Study anytime, anywhere — no internet connection needed</p>
     </div>
-    <div class="card">
+    <div class="card fade-up">
       <div class="icon">💻</div>
       <h3>Cross Platform</h3>
       <p>Available on Windows desktop and Android mobile devices</p>
+    </div>
+    <div class="card fade-up">
+      <div class="icon">📝</div>
+      <h3>Quizzes &amp; Grades</h3>
+      <p>Practice with quizzes and track your academic grades in real time</p>
+    </div>
+    <div class="card fade-up">
+      <div class="icon">🔔</div>
+      <h3>Announcements</h3>
+      <p>Stay updated with instant course announcements from your professors</p>
+    </div>
+    <div class="card fade-up">
+      <div class="icon">🎬</div>
+      <h3>Video Lectures</h3>
+      <p>Watch recorded lectures directly inside the app, no browser needed</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider-container">
+  <div class="divider-line"></div>
+  <div class="divider-badge"><span class="badge-dot"></span> ABOUT</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="about-section">
+  <div class="faculty-card fade-up">
+    <div class="faculty-bg"></div>
+    <div class="faculty-content">
+      <div class="faculty-badge">Faculty of Engineering</div>
+      <h2>Built for Engineering Students</h2>
+      <p>LectraHub was designed specifically for students of the Faculty of Engineering — bringing all your course materials, videos, and announcements into one seamless experience.</p>
     </div>
   </div>
 </div>
@@ -587,15 +781,15 @@
 
 <div class="steps-section">
   <div class="steps-list">
-    <div class="step">
+    <div class="step fade-up">
       <div class="step-num">1</div>
       <p>Click the download button above and save the installer file</p>
     </div>
-    <div class="step">
+    <div class="step fade-up">
       <div class="step-num">2</div>
       <p>Open the downloaded <strong>.exe</strong> or <strong>.apk</strong> file and follow the setup</p>
     </div>
-    <div class="step">
+    <div class="step fade-up">
       <div class="step-num">3</div>
       <p>Launch <strong>LectraHub</strong> and start studying</p>
     </div>
@@ -603,9 +797,30 @@
 </div>
 
 <footer>
-  &copy; 2027 LectraHub, Dr. Ahmed Abdel-Naby &nbsp;&middot;&nbsp; All Rights Reserved
+  <div class="footer-brand">
+    <span class="brand-lectra">LECTRA</span>
+    <span class="brand-hub">hub</span>
+  </div>
+  <p class="footer-tagline">Your complete learning companion</p>
+  <div class="footer-links">
+    <a href="https://github.com/Ahmed-Naby/MTH-Lectures-App/releases">GitHub Releases</a>
+    <a href="https://github.com/Ahmed-Naby/MTH-Lectures-App/issues">Report an Issue</a>
+  </div>
+  <p class="footer-copy">&copy; 2027 LectraHub, Dr. Ahmed Abdel-Naby &nbsp;&middot;&nbsp; All Rights Reserved</p>
 </footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
-
